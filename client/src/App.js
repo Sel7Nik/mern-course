@@ -1,6 +1,8 @@
+import 'materialize-css'
+
 function App() {
   return (
-    <div className="App">
+    <div className="container">
       <h1> App page</h1>
     </div>
   )
