@@ -19,8 +19,6 @@ router.post(
   ],
   async (req, res) => {
     try {
-      console.log('Body', req.body)
-
       const errors = validationResult(req)
 
       if (!errors.isEmpty()) {
@@ -32,7 +30,7 @@ router.post(
 
       const { email, password } = req.body
 
-      const candidat = await User.findOne({ emai: email }) //? можно просто {email}
+      const candidat = await User.findOne({ email: email }) //? можно просто {email}
 
       if (candidat) {
         return res
