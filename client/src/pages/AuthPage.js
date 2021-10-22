@@ -1,49 +1,42 @@
-import { useEffect, useState, useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useHttp } from '../hooks/http.hook'
 import { useMessage } from '../hooks/message.hook'
 import { AuthContext } from '../context/AuthContext'
 
 export const AuthPage = () => {
-  //?
   const auth = useContext(AuthContext)
-  //?
   const message = useMessage()
-  //?
   const { loading, request, error, clearError } = useHttp()
-  //?
   const [form, setForm] = useState({
     email: '',
     password: '',
   })
-  //?
+
   useEffect(() => {
     message(error)
     clearError()
   }, [error, message, clearError])
 
-  //?
   useEffect(() => {
     window.M.updateTextFields()
   }, [])
 
-  //?
   const changeHandler = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value })
   }
-  //!--- регистрация
+
   const registerHandler = async () => {
     try {
       const data = await request('/api/auth/register', 'POST', { ...form })
       message(data.message)
-    } catch (error) {}
+    } catch (e) {}
   }
 
-  //!--- вход
   const loginHandler = async () => {
     try {
       const data = await request('/api/auth/login', 'POST', { ...form })
       auth.login(data.token, data.userId)
-    } catch (error) {}
+    } catch (e) {}
   }
 
   return (
@@ -61,6 +54,7 @@ export const AuthPage = () => {
                   type="text"
                   name="email"
                   className="yellow-input"
+                  value={form.email}
                   onChange={changeHandler}
                 />
                 <label htmlFor="email">Email</label>
@@ -73,6 +67,7 @@ export const AuthPage = () => {
                   type="password"
                   name="password"
                   className="yellow-input"
+                  value={form.password}
                   onChange={changeHandler}
                 />
                 <label htmlFor="email">Пароль</label>
@@ -81,10 +76,10 @@ export const AuthPage = () => {
           </div>
           <div className="card-action">
             <button
-              onClick={loginHandler}
               className="btn yellow darken-4"
               style={{ marginRight: 10 }}
               disabled={loading}
+              onClick={loginHandler}
             >
               Войти
             </button>

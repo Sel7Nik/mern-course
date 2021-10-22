@@ -12,6 +12,7 @@ app.use('/api/auth', authRoutes)
 // app.use('/api/auth', require('./routes/auth.routes'))
 /* или так, */ //? что бы не создавать отдельную переменную
 app.use('/api/link', require('./routes/link.routes'))
+app.use('/t', require('./routes/redirect.routes'))
 
 const PORT = config.get('port') || 5000
 
